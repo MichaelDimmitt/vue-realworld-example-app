@@ -1,55 +1,54 @@
 <template>
   <div>
-    <rwv-list-errors
-      :errors="errors">
-    </rwv-list-errors>
-    <form class="card comment-form" v-on:submit.prevent="onSubmit(slug, comment)">
+    <RwvListErrors :errors="errors" />
+    <form class="card comment-form" @submit.prevent="onSubmit(slug, comment)">
       <div class="card-block">
         <textarea
           class="form-control"
           v-model="comment"
           placeholder="Write a comment..."
-          rows="3">
+          rows="3"
+        >
         </textarea>
       </div>
       <div class="card-footer">
         <img :src="userImage" class="comment-author-img" />
-        <button class="btn btn-sm btn-primary"> Post Comment </button>
+        <button class="btn btn-sm btn-primary">Post Comment</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import RwvListErrors from '@/components/ListErrors'
-import { COMMENT_CREATE } from '@/store/actions.type'
+import RwvListErrors from "./ListErrors.vue";
+import { COMMENT_CREATE } from "../store/actions.type.js";
 
 export default {
-  name: 'RwvCommentEditor',
+  name: "RwvCommentEditor",
   components: { RwvListErrors },
   props: {
     slug: { type: String, required: true },
     content: { type: String, required: false },
     userImage: { type: String, required: false }
   },
-  data () {
+  data() {
     return {
       comment: this.content || null,
       errors: {}
-    }
+    };
   },
   methods: {
-    onSubmit (slug, comment) {
+    onSubmit(slug, comment) {
       this.$store
         .dispatch(COMMENT_CREATE, { slug, comment })
         .then(() => {
-          this.comment = null
-          this.errors = {}
+          this.comment = null;
+          this.errors = {};
         })
         .catch(({ response }) => {
-          this.errors = response.data.errors
-        })
+          this.errors = response.data.errors;
+        });
     }
   }
-}
+};
 </script>

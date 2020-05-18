@@ -10,17 +10,32 @@
             </router-link>
           </p>
           <ul v-if="errors" class="error-messages">
-            <li v-for="(v, k) in errors" :key="k">{{k}} {{ v | error }}</li>
+            <li v-for="(v, k) in errors" :key="k">{{ k }} {{ v | error }}</li>
           </ul>
-          <form v-on:submit.prevent="onSubmit">
+          <form @submit.prevent="onSubmit">
             <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" v-model="username" placeholder="Username">
+              <input
+                class="form-control form-control-lg"
+                type="text"
+                v-model="username"
+                placeholder="Username"
+              />
             </fieldset>
             <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" v-model="email" placeholder="Email">
+              <input
+                class="form-control form-control-lg"
+                type="text"
+                v-model="email"
+                placeholder="Email"
+              />
             </fieldset>
             <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="password" v-model="password" placeholder="Password">
+              <input
+                class="form-control form-control-lg"
+                type="password"
+                v-model="password"
+                placeholder="Password"
+              />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">
               Sign up
@@ -31,18 +46,19 @@
     </div>
   </div>
 </template>
+
 <script>
-import { mapState } from 'vuex'
-import { REGISTER } from '@/store/actions.type'
+import { mapState } from "vuex";
+import { REGISTER } from "@/store/actions.type";
 
 export default {
-  name: 'RwvRegister',
-  data () {
+  name: "RwvRegister",
+  data() {
     return {
-      username: '',
-      email: '',
-      password: ''
-    }
+      username: "",
+      email: "",
+      password: ""
+    };
   },
   computed: {
     ...mapState({
@@ -50,14 +66,15 @@ export default {
     })
   },
   methods: {
-    onSubmit () {
-      this.$store.dispatch(REGISTER, {
-        email: this.email,
-        password: this.password,
-        username: this.username
-      })
-        .then(() => this.$router.push({ name: 'home' }))
+    onSubmit() {
+      this.$store
+        .dispatch(REGISTER, {
+          email: this.email,
+          password: this.password,
+          username: this.username
+        })
+        .then(() => this.$router.push({ name: "home" }));
     }
   }
-}
+};
 </script>
